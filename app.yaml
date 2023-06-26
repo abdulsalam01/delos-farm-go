@@ -1,0 +1,6 @@
+app:
+  name: "delos-app"
+  port: 3000
+database:
+  path: "./config/db/raw/delos.db"
+  name: "delos"
