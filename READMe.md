@@ -1,4 +1,5 @@
 # Aquafarm Management Application
+#### By Abdul Salam
 
 This project aims to develop a prototype of an aquafarm management application. The application manages two entities: farms and ponds. Farms can have multiple ponds, but each pond can only be registered to one farm.
 
@@ -57,6 +58,9 @@ To run the application, make sure you have Go 1.20 and SQLite installed on your 
 
 
 ## Documentation
+
+Documentation that useful for run and tests the API appropriately is attached below:
+
 1. Attached Postman Collection here that can be accessed on:
     ```
     https://api.postman.com/collections/1535500-6fe0a9f1-59f0-4d18-b01a-9ae550110467?access_key=PMAT-01H3YPJ3GQETTM05KSPCH1KPQV
@@ -86,4 +90,4 @@ Please note that the appropriate request payloads and responses should be provid
 
 ---
 
-With the provided instructions, you can set up and run the aquafarm management application using Go 1.20 and SQLite. Feel free to modify and extend the application as needed. If you have any questions or need further assistance, please don't hesitate to ask.
+With the provided instructions, you can set up and run the aquafarm management application using Go 1.20 and SQLite. Feel free to modify and extend the application as needed. If you have any questions or need further assistance, please don't hesitate to ask me at @abdulsalam.
