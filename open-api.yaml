@@ -1,0 +1,290 @@
+swagger: '2.0'
+info:
+  contact: {}
+  title: Delos AquaCultue - API
+  version: 1.0.0
+basePath: /localhost
+paths:
+  /farm:
+    get:
+      parameters:
+        - in: query
+          name: limit
+          type: string
+        - in: query
+          name: offset
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Farm
+      description: Get All
+      operationId: getAll
+      summary: Get All
+    post:
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              employees:
+                example: 10
+                type: number
+              established:
+                example: '2020-12-30'
+                type: string
+              location:
+                example: Indonesian
+                type: string
+              name:
+                example: farm 1
+                type: string
+              size:
+                example: 1200.2
+                type: number
+              technologies:
+                example: drainase,watering
+                type: string
+            type: object
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Farm
+      description: Create
+      operationId: create
+      summary: Create
+  /farm/upsert:
+    post:
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              employees:
+                example: 10
+                type: number
+              established:
+                example: '2020-12-30'
+                type: string
+              location:
+                example: Indonesian, Bandung
+                type: string
+              name:
+                example: farm 1
+                type: string
+              size:
+                example: 1200.2
+                type: number
+              technologies:
+                example: drainase,watering
+                type: string
+            type: object
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Farm
+      description: Upsert
+      operationId: upsert
+      summary: Upsert
+  /farm/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    delete:
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Farm
+      description: Delete By ID
+      operationId: deleteById
+      summary: Delete By ID
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Farm
+      description: Get By ID
+      operationId: getById
+      summary: Get By ID
+    put:
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              employees:
+                example: 10
+                type: number
+              established:
+                example: '2020-12-30'
+                type: string
+              location:
+                example: Indonesian, Jakarta
+                type: string
+              name:
+                example: farm 1
+                type: string
+              size:
+                example: 1200.2
+                type: number
+              technologies:
+                example: drainase,watering
+                type: string
+            type: object
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Farm
+      description: Update By ID
+      operationId: updateById
+      summary: Update By ID
+  /pond:
+    get:
+      parameters:
+        - in: query
+          name: limit
+          type: string
+        - in: query
+          name: offset
+          type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pond
+      description: Get All
+      operationId: getAll1
+      summary: Get All
+    post:
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              farm_id:
+                example: a907e261-8ad9-4df8-89ea-8356a9206560
+                type: string
+              name:
+                example: Pond 1
+                type: string
+              size:
+                example: 1
+                type: number
+              water_source:
+                example: drainase
+                type: string
+            type: object
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pond
+      description: Create
+      operationId: create1
+      summary: Create
+  /pond/upsert:
+    post:
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              farm_id:
+                example: a907e261-8ad9-4df8-89ea-8356a9206560
+                type: string
+              name:
+                example: Pond 1
+                type: string
+              size:
+                example: 10
+                type: number
+              water_source:
+                example: drainase
+                type: string
+            type: object
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pond
+      description: Upsert
+      operationId: upsert1
+      summary: Upsert
+  /pond/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    delete:
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pond
+      description: Delete By ID
+      operationId: deleteById1
+      summary: Delete By ID
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pond
+      description: Get By ID
+      operationId: getById1
+      summary: Get By ID
+    put:
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              farm_id:
+                example: a907e261-8ad9-4df8-89ea-8356a9206560
+                type: string
+              name:
+                example: Pond 1
+                type: string
+              size:
+                example: 10
+                type: number
+              water_source:
+                example: drainase sun
+                type: string
+            type: object
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Pond
+      description: Update By ID
+      operationId: updateById1
+      summary: Update By ID
+tags:
+  - name: Farm
+  - name: Pond

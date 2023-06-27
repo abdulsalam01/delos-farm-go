@@ -17,6 +17,7 @@ import (
 
 	"github.com/abdulsalam/delos/config/app"
 	_dbHandler "github.com/abdulsalam/delos/config/db"
+	"github.com/abdulsalam/delos/helper"
 	_middlewareHandler "github.com/abdulsalam/delos/middleware"
 
 	_farmHandler "github.com/abdulsalam/delos/internal/handler/farm/http"
@@ -32,6 +33,9 @@ var routes = flag.Bool("routes", false, "Generate router documentation")
 
 func main() {
 	flag.Parse()
+
+	// Init validator.
+	helper.NewValidator()
 
 	// Load appConfig.
 	config, err := app.LoadAppConfig()

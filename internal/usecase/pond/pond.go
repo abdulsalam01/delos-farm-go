@@ -24,7 +24,7 @@ func (u *Usecase) GetAll(ctx context.Context, args entity.PondRequestWithPaginat
 
 	cnt, err := u.pondRepo.GetPondCount(ctx)
 	if err != nil {
-		return pondResp, err
+		cnt = 0
 	}
 
 	farm, err := u.getFarmByFarmID(ctx, pond)

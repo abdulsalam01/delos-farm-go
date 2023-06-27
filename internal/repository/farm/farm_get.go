@@ -21,7 +21,6 @@ func (q *Queries) GetFarmAll(ctx context.Context, args entity.FarmRequestWithPag
 
 	for row.Next() {
 		var result farmTable
-
 		if err = row.Scan(
 			&result.ID,
 			&result.Name,

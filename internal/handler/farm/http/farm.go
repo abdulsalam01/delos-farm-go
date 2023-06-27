@@ -1,14 +1,13 @@
 package http
 
 import (
-	"log"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/abdulsalam/delos/internal/constant"
 	"github.com/abdulsalam/delos/internal/entity"
 	"github.com/abdulsalam/delos/internal/entity/generic"
-	"github.com/abdulsalam/delos/internal/handler"
 	_middlewareHandler "github.com/abdulsalam/delos/middleware"
 
 	"github.com/go-chi/chi/v5"
@@ -17,6 +16,7 @@ import (
 )
 
 func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
+	responseWriter := w.(*_middlewareHandler.ResponseWriter)
 	ctx := r.Context()
 
 	query := r.URL.Query()
@@ -40,62 +40,71 @@ func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 	if err != nil {
-		handler.ErrorHandlerReturn(err, w)
+		responseWriter.StatusCode = http.StatusInternalServerError
+		return
 	}
 
 	// Send to middl.
-	responseWriter := w.(*_middlewareHandler.ResponseWriter)
 	responseWriter.ResponseData = farm
 }
 
 func (h *Handler) GetByID(w http.ResponseWriter, r *http.Request) {
+	responseWriter := w.(*_middlewareHandler.ResponseWriter)
+
 	ctx := r.Context()
 	id := chi.URLParam(r, constant.FarmID)
 
 	uuidId, err := uuid.Parse(id)
 	if err != nil {
+		responseWriter.StatusCode = http.StatusBadRequest
 		return
 	}
 
 	farm, err := h.usecase.GetByID(ctx, uuidId)
 	if err != nil {
-		handler.ErrorHandlerReturn(err, w)
+		responseWriter.StatusCode = http.StatusInternalServerError
+		return
 	}
 
 	// Send to middl.
-	responseWriter := w.(*_middlewareHandler.ResponseWriter)
 	responseWriter.ResponseData = farm
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
+	responseWriter := w.(*_middlewareHandler.ResponseWriter)
+
 	ctx := r.Context()
 	data := &entity.FarmRequest{}
 	if err := render.Bind(r, data); err != nil {
-		log.Println(err)
+		fmt.Println(err)
+		responseWriter.StatusCode = http.StatusBadRequest
 		return
 	}
 
 	id, err := h.usecase.Create(ctx, *data)
 	if err != nil {
-		handler.ErrorHandlerReturn(err, w)
+		responseWriter.StatusCode = http.StatusInternalServerError
+		return
 	}
 
 	// Send to middl.
-	responseWriter := w.(*_middlewareHandler.ResponseWriter)
 	responseWriter.ResponseData = id
 }
 
 func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
+	responseWriter := w.(*_middlewareHandler.ResponseWriter)
+
 	ctx := r.Context()
 	data := &entity.FarmRequest{}
 	if err := render.Bind(r, data); err != nil {
-		log.Println(err)
+		responseWriter.StatusCode = http.StatusBadRequest
 		return
 	}
 
 	id := chi.URLParam(r, constant.FarmID)
 	uuidId, err := uuid.Parse(id)
 	if err != nil {
+		responseWriter.StatusCode = http.StatusBadRequest
 		return
 	}
 
@@ -103,47 +112,51 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	data.ID = uuidId
 	rows, err := h.usecase.UpdateByID(ctx, *data)
 	if err != nil {
-		handler.ErrorHandlerReturn(err, w)
+		responseWriter.StatusCode = http.StatusInternalServerError
+		return
 	}
 
 	// Send to middl.
-	responseWriter := w.(*_middlewareHandler.ResponseWriter)
 	responseWriter.ResponseData = rows
 }
 
 func (h *Handler) DeleteByID(w http.ResponseWriter, r *http.Request) {
+	responseWriter := w.(*_middlewareHandler.ResponseWriter)
+
 	ctx := r.Context()
 	id := chi.URLParam(r, constant.FarmID)
 
 	uuidId, err := uuid.Parse(id)
 	if err != nil {
+		responseWriter.StatusCode = http.StatusBadRequest
 		return
 	}
 
 	farm, err := h.usecase.DeleteByID(ctx, uuidId)
 	if err != nil {
-		handler.ErrorHandlerReturn(err, w)
+		responseWriter.StatusCode = http.StatusInternalServerError
+		return
 	}
 
 	// Send to middl.
-	responseWriter := w.(*_middlewareHandler.ResponseWriter)
 	responseWriter.ResponseData = farm
 }
 
 func (h *Handler) Upsert(w http.ResponseWriter, r *http.Request) {
+	responseWriter := w.(*_middlewareHandler.ResponseWriter)
+
 	ctx := r.Context()
 	data := &entity.FarmRequest{}
 	if err := render.Bind(r, data); err != nil {
-		log.Println(err)
+		responseWriter.StatusCode = http.StatusBadRequest
 		return
 	}
 
 	id, err := h.usecase.Upsert(ctx, *data)
 	if err != nil {
-		handler.ErrorHandlerReturn(err, w)
+		responseWriter.StatusCode = http.StatusInternalServerError
 	}
 
 	// Send to middl.
-	responseWriter := w.(*_middlewareHandler.ResponseWriter)
 	responseWriter.ResponseData = id
 }

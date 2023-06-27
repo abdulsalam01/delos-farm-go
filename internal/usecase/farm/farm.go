@@ -24,7 +24,7 @@ func (u *Usecase) GetAll(ctx context.Context, args entity.FarmRequestWithPaginat
 
 	cnt, err := u.farmRepo.GetFarmCount(ctx)
 	if err != nil {
-		return farmResp, err
+		cnt = 0
 	}
 
 	// Accept as array.

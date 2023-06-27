@@ -21,12 +21,13 @@ const (
 
 	queryPartialSelectActiveOnly      = querySelectFromBaseRepo + ` FROM ` + tableDef + ` WHERE deleted_at IS NULL `
 	queryPartialSelectCountActiveOnly = querySelectCountFromBaseRepo + ` FROM ` + tableDef + ` WHERE deleted_at IS NULL `
+	queryPartialOrderByCreatedAt      = ` ORDER BY created_at DESC `
 
 	querySelectByID               = queryPartialSelectActiveOnly + ` AND id = $1`
 	querySelectBySlug             = queryPartialSelectActiveOnly + ` AND slug = $1`
 	querySelectCountByID          = queryPartialSelectCountActiveOnly + ` AND id = $1`
 	querySelectCountBySlug        = queryPartialSelectCountActiveOnly + ` AND slug = $1`
-	querySelectByIDWithPagination = queryPartialSelectActiveOnly + ` LIMIT $1 OFFSET $2`
+	querySelectByIDWithPagination = queryPartialSelectActiveOnly + queryPartialOrderByCreatedAt + ` LIMIT $1 OFFSET $2`
 
 	// Insert.
 	queryInsertFromBaseRepo = `INSERT INTO ` + tableDef + `

@@ -36,13 +36,13 @@ type FarmResponseWithPagination struct {
 
 type FarmRequest struct {
 	ID           uuid.UUID `json:"id"`
-	Name         string    `json:"name"`
+	Name         string    `json:"name" validate:"required"`
 	Slug         string    `json:"slug"` // Should be unique.
-	Location     string    `json:"location"`
-	Size         float64   `json:"size"`
-	Established  string    `json:"established"`
-	Technologies string    `json:"technologies"`
-	Employees    int       `json:"employees"`
+	Location     string    `json:"location" validate:"required"`
+	Size         float64   `json:"size" validate:"required,number"`
+	Established  string    `json:"established" validate:"required"`
+	Technologies string    `json:"technologies" validate:"required"`
+	Employees    int       `json:"employees" validate:"required,number"`
 }
 
 type FarmRequestWithPagination struct {
@@ -51,13 +51,12 @@ type FarmRequestWithPagination struct {
 }
 
 func (a *FarmRequest) Bind(r *http.Request) error {
-	// a.Article is nil if no Article fields are sent in the request. Return an
-	// error to avoid a nil pointer dereference.
-	if a.Name == "" {
-		return errors.New("missing required name fields.")
+	err := helper.Validator.Struct(a)
+	if err != nil {
+		return errors.New("missing required fields.")
 	}
 
-	// a.User is nil if no Userpayload fields are sent in the request. In this app
+	// a.FarmRequest is nil if no Userpayload fields are sent in the request. In this app
 	// this won't cause a panic, but checks in this Bind method may be required if
 	// a.User or further nested fields like a.User.Name are accessed elsewhere.
 

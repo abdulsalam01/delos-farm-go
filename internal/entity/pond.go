@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/abdulsalam/delos/helper"
 	"github.com/abdulsalam/delos/internal/entity/generic"
 )
 
@@ -24,11 +25,11 @@ type Pond struct {
 
 type PondRequest struct {
 	ID          uuid.UUID `json:"id"`
-	FarmID      uuid.UUID `json:"farm_id"`
-	Name        string    `json:"name"`
+	FarmID      uuid.UUID `json:"farm_id" validate:"required"`
+	Name        string    `json:"name" validate:"required"`
 	Slug        string    `json:"slug"` // Should be unique.
-	Size        float64   `json:"size"`
-	WaterSource string    `json:"water_source"`
+	Size        float64   `json:"size" validate:"required,number"`
+	WaterSource string    `json:"water_source" validate:"required"`
 }
 
 type PondRequestWithPagination struct {
@@ -53,13 +54,12 @@ func (fq *PondRequest) ToBaseEntity() Pond {
 }
 
 func (a *PondRequest) Bind(r *http.Request) error {
-	// a.Article is nil if no Article fields are sent in the request. Return an
-	// error to avoid a nil pointer dereference.
-	if a.Name == "" {
-		return errors.New("missing required name fields.")
+	err := helper.Validator.Struct(a)
+	if err != nil {
+		return errors.New("missing required fields.")
 	}
 
-	// a.User is nil if no Userpayload fields are sent in the request. In this app
+	// a.PondRequest is nil if no Userpayload fields are sent in the request. In this app
 	// this won't cause a panic, but checks in this Bind method may be required if
 	// a.User or further nested fields like a.User.Name are accessed elsewhere.
 
