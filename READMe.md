@@ -22,10 +22,10 @@ This application is developed using the following technologies:
 
 ## Note on Database Design
 
-Please note that for the purpose of this prototype, we have made the following design decisions:
+Please note that for the purpose of this prototype, I have made the following design decisions:
 
 - To prioritize performance optimization, I have intentionally avoided using joins and foreign key constraints between the farms and ponds tables in this prototype. While this simplifies the implementation, it's important to note that in a production system, establishing proper relationship constraints and utilizing joins and foreign keys would be recommended for maintaining data integrity and enforcing referential integrity. However, for the purpose of this prototype, omitting these features helps to enhance the application's performance.
-- To enhance database performance, we recommend setting indexes for several fields that are commonly used in queries. By setting indexes on these fields, you can speed up data retrieval operations. Consider indexing fields such as farmID, pondID, and any other frequently used columns.
+- To enhance database performance, I recommend setting indexes for several fields that are commonly used in queries. By setting indexes on these fields, you can speed up data retrieval operations. Consider indexing fields such as farmID, pondID, and any other frequently used columns.
 
 ## Instructions
 
