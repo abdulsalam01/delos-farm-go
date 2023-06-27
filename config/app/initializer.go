@@ -1,13 +1,14 @@
 package app
 
 import (
-	"gopkg.in/yaml.v3"
 	"io/ioutil"
+
+	"gopkg.in/yaml.v3"
 )
 
 var (
 	path        = "./"
-	serviceYaml = "app.yaml"
+	serviceYaml = "./config/app.yaml"
 )
 
 func LoadAppConfig() (Config, error) {
