@@ -1,0 +1,19 @@
+# Ignore common Go files and directories
+.git
+.idea
+.vscode
+*.log
+*.out
+*.test
+
+# Ignore Go binaries and build artifacts
+bin/
+obj/
+*.exe
+
+# Ignore vendor directories
+vendor/
+
+# Ignore any other unnecessary files or directories
+node_modules/
+*.swp
