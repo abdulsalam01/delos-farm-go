@@ -109,12 +109,12 @@ func setupRoutes(
 
 	// Pond.
 	r.Route("/pond", func(r chi.Router) {
-		r.Post("/", pondHandler.Create)           // POST /farms
-		r.Post("/upsert", pondHandler.Upsert)     // POST /farms/upsert
-		r.Delete("/{id}", pondHandler.DeleteByID) // Delete /farms/:id
-		r.Put("/{id}", pondHandler.Update)        // PUT /farms/:id
-		r.Get("/", pondHandler.GetAll)            // GET /farms
-		r.Get("/{id}", pondHandler.GetByID)       // GET /farms/:id
+		r.Post("/", pondHandler.Create)           // POST /ponds
+		r.Post("/upsert", pondHandler.Upsert)     // POST /ponds/upsert
+		r.Delete("/{id}", pondHandler.DeleteByID) // Delete /ponds/:id
+		r.Put("/{id}", pondHandler.Update)        // PUT /ponds/:id
+		r.Get("/", pondHandler.GetAll)            // GET /ponds
+		r.Get("/{id}", pondHandler.GetByID)       // GET /ponds/:id
 	})
 
 	// Statistic.
