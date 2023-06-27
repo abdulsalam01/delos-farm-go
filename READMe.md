@@ -39,13 +39,13 @@ To run the application, make sure you have Go 1.20 and SQLite installed on your 
 2. Navigate to the project directory:
 
    ```bash
-   cd aquafarm-management-app
+   cd delos-farm-go
    ```
 
 3. Build and run the application:
 
    ```bash
-   go run main.go
+   go run cmd/app/main.go
    ```
 
 4. Or simply (if using docker):
