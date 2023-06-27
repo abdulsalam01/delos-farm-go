@@ -285,6 +285,15 @@ paths:
       description: Update By ID
       operationId: updateById1
       summary: Update By ID
+  /statistic:
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      description: Statistics
+      operationId: statistics
+      summary: Statistics
 tags:
   - name: Farm
   - name: Pond

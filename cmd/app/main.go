@@ -36,6 +36,8 @@ func main() {
 
 	// Init validator.
 	helper.NewValidator()
+	// Init middleware statistics.
+	_middlewareHandler.InitStatistics()
 
 	// Load appConfig.
 	config, err := app.LoadAppConfig()
@@ -93,6 +95,7 @@ func setupRoutes(
 	r.Use(middleware.URLFormat)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(_middlewareHandler.JSONMiddleware)
+	r.Use(_middlewareHandler.TrackStatistics)
 
 	// Farm.
 	r.Route("/farm", func(r chi.Router) {
@@ -104,7 +107,7 @@ func setupRoutes(
 		r.Get("/{id}", farmHandler.GetByID)       // GET /farms/:id
 	})
 
-	// Farm.
+	// Pond.
 	r.Route("/pond", func(r chi.Router) {
 		r.Post("/", pondHandler.Create)           // POST /farms
 		r.Post("/upsert", pondHandler.Upsert)     // POST /farms/upsert
@@ -113,6 +116,9 @@ func setupRoutes(
 		r.Get("/", pondHandler.GetAll)            // GET /farms
 		r.Get("/{id}", pondHandler.GetByID)       // GET /farms/:id
 	})
+
+	// Statistic.
+	r.Get("/statistic", _middlewareHandler.GetStatistics)
 
 	return r
 }
