@@ -76,7 +76,6 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	data := &entity.FarmRequest{}
 	if err := render.Bind(r, data); err != nil {
-		fmt.Println(err)
 		responseWriter.StatusCode = http.StatusBadRequest
 		return
 	}
