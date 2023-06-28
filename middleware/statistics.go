@@ -7,8 +7,8 @@ import (
 
 // EndpointStats represents the statistics for a specific endpoint
 type EndpointStats struct {
-	Count            int `json:"count"`
-	UniqueUserAgents int `json:"unique_user_agents"`
+	Count            int            `json:"count"`
+	UniqueUserAgents map[string]int `json:"unique_user_agents"`
 }
 
 // Statistics represents the overall statistics for all endpoints
@@ -24,12 +24,30 @@ func TrackStatistics(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Increment count for the current endpoint
 		stats.Mutex.Lock()
-		count := stats.Endpoints[r.URL.Path].Count + 1
-		uniqueUserAgents := stats.Endpoints[r.URL.Path].UniqueUserAgents + 1
 
-		stats.Endpoints[r.URL.Path] = EndpointStats{
-			Count:            count,
-			UniqueUserAgents: uniqueUserAgents,
+		pathKey := r.URL.Path
+		userAgents := r.UserAgent()
+		count := stats.Endpoints[pathKey].Count + 1
+
+		// Check userAgents.
+		// Initializer the map if empty.
+		data, ok := stats.Endpoints[pathKey].UniqueUserAgents[userAgents]
+		if !ok {
+			stats.Endpoints[pathKey] = EndpointStats{
+				Count: count,
+				UniqueUserAgents: map[string]int{
+					userAgents: 1,
+				},
+			}
+			// Re-assign.
+			data = stats.Endpoints[pathKey].UniqueUserAgents[userAgents]
+		}
+
+		stats.Endpoints[pathKey] = EndpointStats{
+			Count: count,
+			UniqueUserAgents: map[string]int{
+				userAgents: data,
+			},
 		}
 		stats.Mutex.Unlock()
 

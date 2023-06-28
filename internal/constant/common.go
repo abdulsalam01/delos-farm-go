@@ -9,3 +9,7 @@ const (
 	DefaultLimit  = 10
 	DefaultOffset = 0
 )
+
+const (
+	HTTPHeaderUserAgent = "User-Agent"
+)
